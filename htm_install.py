@@ -63,10 +63,10 @@ def main():
         import toml
     else:
         import tomllib as toml
-    with open("pyproject.toml", "rb") as f:
-        pyproject = toml.load(f)
+    #with open("pyproject.toml", "rb") as f:
+        #pyproject = toml.load(f.read())
         
-    project_version = pyproject["project"]["version"]
+    project_version = "2.2.0" #pyproject["project"]["version"]
     print(f"Version: {project_version}")
         
     # Ensure CMake is installed and meets the minimum version requirement
