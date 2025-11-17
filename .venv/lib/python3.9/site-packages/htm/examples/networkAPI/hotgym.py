@@ -151,7 +151,7 @@ def main(parameters=default_parameters, argv=None, verbose=True):
     dateEncoderRegion.setParameterInt64('sensedTime', int(dateString.timestamp()))
     valueEncoderRegion.setParameterReal64('sensedValue', consumption)
 
-    net.run(1)
+    net.run(4)
     anomaly.append(np.array(tmRegion.getOutputArray("anomaly"))[0])
 
   try:

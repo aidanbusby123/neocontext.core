@@ -78,41 +78,39 @@ def main():
          
     # if the htm_core library does not exist, go build it.   
     htm_core_lib_path = os.path.join("build", "Release", "lib")
-    if not (os.path.exists(os.path.join(htm_core_lib_path, "htm_core.lib")) or
-            os.path.exists(os.path.join(htm_core_lib_path, "libhtm_core.a"))) :
 
-        # Build the C++ components with CMake
-        print("Building C++ components...")
-        shutil.rmtree("build/cmake", ignore_errors=True)  # Clear cache, Ignore errors if the directory doesn't exist
-        shutil.rmtree("dist", ignore_errors=True)         # Clear wheels, Ignore errors if the directory doesn't exist
+
+    # Build the C++ components with CMake
+    print("Building C++ components...")
+    shutil.rmtree("build/cmake", ignore_errors=True)  # Clear cache, Ignore errors if the directory doesn't exist
+    shutil.rmtree("dist", ignore_errors=True)         # Clear wheels, Ignore errors if the directory doesn't exist
         
 
-        # Build the C++ htm_core library
-        cmake_command = [
-            "cmake",
-            "-S", ".",
-            "-B", "build/cmake",
-            "-DBINDING_BUILD=CPP_Only",
-            f"-DPROJECT_VERSION1={project_version}"
-        ]
-        print("CMake command:", cmake_command)  # Print the command before executing it
-        subprocess.run(cmake_command, check=True, shell=False)
+    # Build the C++ htm_core library
+    cmake_command = [
+        "cmake",
+        "-S", ".",
+        "-B", "build/cmake",
+        "-DBINDING_BUILD=CPP_Only",
+        f"-DPROJECT_VERSION1={project_version}"
+    ]
+    print("CMake command:", cmake_command)  # Print the command before executing it
+    subprocess.run(cmake_command, check=True, shell=False)
+     
+    cmake_command = [
+        "cmake", 
+        "--build", 
+        "build/cmake", 
+        "--config", 
+        "Release", 
+        "--target", 
+        "install"]
+    print("CMake command:", cmake_command)
+    subprocess.run(cmake_command, check=True)
+    print("C++ component build completed")
+    print("")
         
-        cmake_command = [
-            "cmake", 
-            "--build", 
-            "build/cmake", 
-            "--config", 
-            "Release", 
-            "--target", 
-            "install"]
-        print("CMake command:", cmake_command)
-        subprocess.run(cmake_command, check=True)
-        print("C++ component build completed")
-        print("")
-        
-    else:
-        print("C++ components already built. Skipping C++ build...")
+
 
     wheel_file = find_wheel_file(project_version)
     if wheel_file == None:

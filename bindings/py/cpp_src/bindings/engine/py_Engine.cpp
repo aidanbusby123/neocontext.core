@@ -486,6 +486,11 @@ namespace htm_ext
             , py::arg("linkType") = "", py::arg("linkParams") = ""
             , py::arg("srcOutput") = "", py::arg("destInput") = ""
             , py::arg("propagationDelay") = 0);
+
+        py_Network.def("removeLink", &htm::Network::removeLink,
+        "Removes a link between regions",
+        py::arg("srcName"), py::arg("destName"),
+        py::arg("srcOutput"), py::arg("destInput"));
             
         py_Network.def("setInputData", [](Network& net, const std::string& name, py::buffer& b)
             { 
